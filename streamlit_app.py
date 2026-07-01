@@ -1,3 +1,44 @@
+# =============================================================================
+# streamlit_app.py — Agent Observability Dashboard
+# =============================================================================
+# Context:
+#   Streamlit frontend for the Agentic AI Workflow Platform. Provides
+#   a chat-like interface to submit tasks, view the agent's reasoning
+#   trace step by step, and inspect metrics (tokens, duration, tool
+#   calls per step).
+#
+# Architectural Reasoning:
+#   - Streamlit over a custom React frontend: zero frontend build
+#     tooling, automatic dark/light theme, and native charting via
+#     Plotly. Streamlit apps are single-file Python scripts — ideal
+#     for portfolio demos where frontend is not the focus.
+#   - httpx to talk to the FastAPI backend. Synchronous requests are
+#     fine in Streamlit because the UI blocks on execution anyway.
+#   - st.columns + st.metric for summary KPIs. st.expander for
+#     each step's trace — steps are collapsible so the user can
+#     focus on one step at a time.
+#   - Plotly bar chart for tool calls per step: converts the trace
+#     to a pandas DataFrame in one line. Quick visual signal on
+#     where the agent spent its tool budget.
+#   - Example task buttons with st.session_state rerun pattern:
+#     clicking a button sets the task text and triggers a rerun so
+#     the user can edit before executing.
+#
+# Trade-offs:
+#   - Streamlit vs Gradio vs full React. Streamlit is the fastest
+#     path to a working dashboard. Gradio would be better for
+#     demo-sharing (public links). React for production UX. For
+#     portfolio, Streamlit shows full-stack capability without
+#     the complexity of a JS framework.
+#   - Synchronous httpx vs async. Streamlit's execution model is
+#     synchronous per rerun — there's no benefit to async here.
+#
+# Opinionated Stance:
+#   Every backend needs a frontend, even if it's a Streamlit
+#   dashboard. Visualising the agent's reasoning trace is the
+#   single most important feature for debugging and demoing
+#   agentic systems.
+# =============================================================================
 from __future__ import annotations
 
 import pandas as pd
