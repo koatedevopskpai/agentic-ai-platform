@@ -1,3 +1,46 @@
+# =============================================================================
+# src/services/agent_workflow.py — Agentic Reasoning Loop
+# =============================================================================
+# Context:
+#   Core agent execution engine. Implements the observe-think-act
+#   reasoning loop: invokes the LLM, processes tool calls, tracks
+#   execution traces, and returns the final answer with full
+#   observability data.
+#
+# Architectural Reasoning:
+#   - Single loop with iteration limit prevents infinite reasoning.
+#     Each iteration: LLM invoke -> check tool_calls -> execute
+#     tools -> append messages -> repeat or break. The loop exits
+#     when the LLM returns a message with no tool_calls.
+#   - Tool responses go back into the message list, giving the LLM
+#     full conversation context for the next reasoning step. This
+#     is the standard ReAct pattern (reasoning + acting).
+#   - step_start / tool_start timing provides per-step and per-tool
+#     duration measurements. The response includes total_duration_ms.
+#     Without timing, you can't diagnose slow agents.
+#   - total_tokens from usage_metadata. LangChain models optionally
+#     return token counts. Not all providers support it, so the
+#     getattr/None check prevents crashes on models that don't.
+#   - The model_used field comes from the LLM client instance,
+#     not settings.openai_model, so it reflects what was actually
+#     called (important when the mock overrides the model name).
+#
+# Trade-offs:
+#   - ReAct loop vs LangGraph graph. A manual loop is simpler to
+#     read, debug, and test. LangGraph adds state management and
+#     conditional edges for complex branching. For a single-agent
+#     system with one tool loop, a manual ReAct loop is clearer.
+#   - Synchronous execution. Async would require an async LLM client
+#     (available via ChatOpenAI ainvoke) and async tools. The current
+#     tools are CPU-bound, so async adds complexity without throughput
+#     gain.
+#
+# Opinionated Stance:
+#   The ReAct loop is the simplest correct implementation of an
+#   agent. Don't add LangGraph or Pregel until you need branching
+#   workflows, human-in-the-loop, or state persistence. A
+#   single-agent loop is 100 lines and doesn't need a framework.
+# =============================================================================
 from __future__ import annotations
 
 import json
