@@ -1,3 +1,42 @@
+# =============================================================================
+# src/services/tools.py — Agent Tool Definitions
+# =============================================================================
+# Context:
+#   Three LangChain tools the agent can invoke: calculate
+#   (math expressions), analyze_text (text statistics), and
+#   knowledge_base (internal Q&A). All run offline with no
+#   external API dependencies.
+#
+# Architectural Reasoning:
+#   - @tool decorator from LangChain: provides automatic schema
+#     generation from function signatures + docstrings, binds to
+#     LLM function-calling, and supports .invoke() for direct
+#     execution. Adding a tool is a one-function change.
+#   - calculate uses a restricted eval with a whitelist (math
+#     module, builtins blocked). Safe for user-provided expressions
+#     that need math operations; not safe for arbitrary code.
+#   - knowledge_base uses simple keyword matching over a hardcoded
+#     dict. No vector DB, no embedding cost, zero dependencies.
+#     For portfolio demo, keyword coverage > semantic search.
+#   - TOOL_MAP dict bridges tool name strings to callable objects
+#     for runtime dispatch. run_tool() is the single entry point
+#     used by the agent loop — no conditional logic per tool.
+#
+# Trade-offs:
+#   - Restricted eval vs AST parsing. Eval is simpler but cannot
+#     provide safe error messages for syntax errors. AST parsing
+#     (ast.parse + whitelist walk) would be safer but ~4x more code.
+#   - Keyword matching vs vector search for knowledge_base. Vector
+#     search handles synonyms and phrasing differences. Keyword
+#     matching is deterministic and works with zero setup — the
+#     right choice for a portfolio demo.
+#
+# Opinionated Stance:
+#   Tools are the agent's interface to the world. Each tool should
+#   do one thing well, accept typed inputs, and return structured
+#   string output. Function-calling tools must be deterministic
+#   — no randomness, no hidden state.
+# =============================================================================
 from __future__ import annotations
 
 import logging
