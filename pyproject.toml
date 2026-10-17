@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=70"]
-build-backend = "setuptools.backends._legacy:_Backend"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-ai-platform"
@@ -26,7 +26,11 @@ dependencies = [
 ]
 
 [tool.setuptools.packages.find]
-where = ["src"]
+# `where = ["."]` with `include = ["src*"]` installs the `src` package that the
+# app and tests already import (`from src.main import create_app`). Previously
+# `where = ["src"]` looked for packages *inside* src/, so `include = ["src*"]`
+# matched nothing and `pip install .` produced a distribution containing no code.
+where = ["."]
 include = ["src*"]
 
 [tool.pytest.ini_options]
