@@ -1,13 +1,13 @@
 # Agentic AI Workflow Platform
 
-[![CI](https://github.com/koate-kpai/agentic-ai-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/koate-kpai/agentic-ai-platform/actions/workflows/ci.yml)
+[![CI](https://github.com/koatedevopskpai/agentic-ai-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/koatedevopskpai/agentic-ai-platform/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/API-FastAPI-009688)](https://fastapi.tiangolo.com/)
 [![LangGraph](https://img.shields.io/badge/LangGraph-1.0%2B-1C3C3C)](https://langchain-ai.github.io/langgraph/)
 [![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B)](https://streamlit.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-> A production-grade **Agentic AI Workflow Platform** with a LangGraph-powered ReAct reasoning loop, tool-use execution, execution trace observability, and an interactive Streamlit dashboard. Built to demonstrate enterprise-ready agent engineering — typed, tested, containerised, and CI/CD-enabled.
+> An **Agentic AI Workflow Platform** with a LangGraph-powered ReAct reasoning loop, tool-use execution, execution trace observability, and an interactive Streamlit dashboard. A reference implementation: typed, tested, containerised, and CI/CD-enabled.
 
 ---
 
@@ -108,7 +108,7 @@ This platform proves I know:
 ### Installation
 
 ```bash
-git clone https://github.com/koate-kpai/agentic-ai-platform.git
+git clone https://github.com/koatedevopskpai/agentic-ai-platform.git
 cd agentic-ai-platform
 
 pip install .
@@ -305,12 +305,12 @@ This portfolio directly demonstrates every skill an AI/LLM Engineer role require
 
 ## About the Author
 
-**George Kpai, PMP, PRINCE2**
+**Koate Kpai, PMP, PRINCE2 Practitioner**
 
-20 years building complex dependency networks and quantitative logic systems for £1.2B+ infrastructure programmes. Now pivoting into AI engineering — combining deep domain expertise with production-grade Python and modern agent frameworks.
+Eight years of enterprise data and platform engineering across regulated rail and utilities, now focused on AI engineering — combining that domain experience with typed, tested Python and modern agent frameworks.
 
-- **Email:** georgekpai@gmail.com
-- **GitHub:** [github.com/koate-kpai](https://github.com/koate-kpai)
+- **Email:** koatekpai@outlook.com
+- **GitHub:** [github.com/koatedevopskpai](https://github.com/koatedevopskpai)
 
 ---
 
