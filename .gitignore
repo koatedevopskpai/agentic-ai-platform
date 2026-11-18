@@ -9,3 +9,9 @@ venv/
 *.egg-info/
 dist/
 build/
+
+# Personal / office documents - never publish interview prep, CVs or application paperwork
+*.docx
+*.dotx
+*CV*.pdf
+*CV*.doc
